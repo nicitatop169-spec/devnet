@@ -11,6 +11,7 @@
             box-sizing: border-box;
         }
 
+        /* ===== БАЗОВЫЕ ПЕРЕМЕННЫЕ ===== */
         :root {
             --bg-primary: #1a1a1a;
             --bg-secondary: #242424;
@@ -23,6 +24,55 @@
             --text-primary: #e0e0e0;
             --text-secondary: #888;
             --border: #333;
+            --placeholder-color: #000;
+        }
+
+        /* ===== БЕЛАЯ ТЕМА ===== */
+        body[data-theme="white"] {
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e8e8e8;
+            --bg-card: #ffffff;
+            --accent-primary: #1a1a1a;
+            --accent-secondary: #333333;
+            --accent-dark: #cccccc;
+            --accent-glow: rgba(0, 0, 0, 0.15);
+            --text-primary: #1a1a1a;
+            --text-secondary: #666;
+            --border: #ddd;
+            --placeholder-color: #fff;
+        }
+
+        /* ===== ЗЕЛЁНАЯ ТЕМА ===== */
+        body[data-theme="green"] {
+            --bg-primary: #0a1a0a;
+            --bg-secondary: #0f240f;
+            --bg-tertiary: #143014;
+            --bg-card: #0d1f0d;
+            --accent-primary: #00ff41;
+            --accent-secondary: #39ff14;
+            --accent-dark: #008f11;
+            --accent-glow: rgba(0, 255, 65, 0.5);
+            --text-primary: #d0ffd0;
+            --text-secondary: #6aaa6a;
+            --border: #1a3a1a;
+            --placeholder-color: #000;
+        }
+
+        /* ===== СИНЯЯ ТЕМА ===== */
+        body[data-theme="blue"] {
+            --bg-primary: #0a0f1a;
+            --bg-secondary: #0f1824;
+            --bg-tertiary: #142030;
+            --bg-card: #0d151f;
+            --accent-primary: #0080ff;
+            --accent-secondary: #00a8ff;
+            --accent-dark: #0055aa;
+            --accent-glow: rgba(0, 128, 255, 0.5);
+            --text-primary: #d0e0ff;
+            --text-secondary: #6a8aaa;
+            --border: #1a2a3a;
+            --placeholder-color: #000;
         }
 
         body {
@@ -31,6 +81,7 @@
             font-family: 'Segoe UI', Tahoma, sans-serif;
             min-height: 100vh;
             padding: 20px;
+            transition: background 0.4s ease, color 0.4s ease;
         }
 
         .container {
@@ -53,6 +104,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            transition: color 0.4s ease;
         }
 
         .header h1 img {
@@ -90,6 +142,7 @@
             border-radius: 16px;
             padding: 25px;
             margin-bottom: 20px;
+            transition: background 0.4s ease, border-color 0.4s ease;
         }
 
         .section-title {
@@ -99,6 +152,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: color 0.4s ease;
         }
 
         .section-title img {
@@ -128,7 +182,72 @@
             margin-top: 5px;
         }
 
-        /* Theme Selector */
+        /* ===== ПРЕВЬЮ ТЕМЫ ===== */
+        .theme-preview {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.4s ease;
+        }
+
+        .preview-title {
+            color: var(--text-secondary);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .preview-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.4s ease;
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .preview-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            transition: background 0.4s ease;
+        }
+
+        .preview-name {
+            color: var(--accent-primary);
+            font-weight: bold;
+            font-size: 14px;
+            transition: color 0.4s ease;
+        }
+
+        .preview-text {
+            color: var(--text-primary);
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .preview-code {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 10px;
+            color: var(--accent-primary);
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            transition: all 0.4s ease;
+        }
+
+        /* ===== THEME SELECTOR ===== */
         .theme-selector {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -194,7 +313,7 @@
             text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
         }
 
-        /* Toggle Switch */
+        /* ===== TOGGLE SWITCH ===== */
         .toggle {
             position: relative;
             width: 50px;
@@ -224,10 +343,10 @@
 
         .toggle.active::after {
             left: 26px;
-            background: #000;
+            background: var(--placeholder-color);
         }
 
-        /* Select */
+        /* ===== SELECT ===== */
         .select-wrapper {
             position: relative;
         }
@@ -264,11 +383,11 @@
             font-size: 10px;
         }
 
-        /* Button */
+        /* ===== BUTTON ===== */
         .btn {
             padding: 12px 24px;
             background: var(--accent-primary);
-            color: #000;
+            color: var(--placeholder-color);
             border: none;
             border-radius: 8px;
             font-weight: bold;
@@ -291,7 +410,7 @@
             background: #ff3377;
         }
 
-        /* Profile Section */
+        /* ===== PROFILE SECTION ===== */
         .profile-section {
             display: flex;
             align-items: center;
@@ -307,12 +426,26 @@
             border: 3px solid var(--accent-primary);
             cursor: pointer;
             position: relative;
+            transition: border-color 0.4s ease;
         }
 
         .profile-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        .profile-avatar .placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--placeholder-color);
+            font-weight: bold;
+            font-size: 32px;
+            transition: all 0.4s ease;
         }
 
         .profile-avatar:hover::after {
@@ -344,7 +477,7 @@
             font-size: 14px;
         }
 
-        /* Адаптивность */
+        /* ===== АДАПТИВНОСТЬ ===== */
         @media (max-width: 600px) {
             .theme-selector {
                 grid-template-columns: repeat(2, 1fr);
@@ -365,7 +498,7 @@
         }
     </style>
 </head>
-<body>
+<body data-theme="black">
     <div class="container">
         <div class="header">
             <h1>
@@ -386,7 +519,7 @@
             </div>
             <div class="profile-section">
                 <div class="profile-avatar" onclick="document.getElementById('avatarUpload').click()">
-                    <div class="placeholder" style="width: 100%; height: 100%; background: linear-gradient(135deg, var(--accent-primary), var(--accent-dark)); display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 32px;">U</div>
+                    <div class="placeholder">U</div>
                 </div>
                 <input type="file" id="avatarUpload" class="hidden-input" accept="image/*" onchange="uploadAvatar(event)">
                 <div class="profile-info">
@@ -406,7 +539,7 @@
             <div class="setting-item">
                 <div>
                     <div class="setting-label">Цветовая тема</div>
-                    <div class="setting-description">Выберите основную цветовую схему</div>
+                    <div class="setting-description">Выберите основную цветовую схему — страница обновится мгновенно</div>
                 </div>
             </div>
             <div class="theme-selector">
@@ -421,6 +554,21 @@
                 </div>
                 <div class="theme-option theme-blue" onclick="selectTheme('blue', this)">
                     <div class="theme-name">Синяя</div>
+                </div>
+            </div>
+
+            <!-- ЖИВОЕ ПРЕВЬЮ -->
+            <div class="theme-preview">
+                <div class="preview-title">👁 Предпросмотр темы</div>
+                <div class="preview-card">
+                    <div class="preview-header">
+                        <div class="preview-avatar"></div>
+                        <div class="preview-name">@developer</div>
+                    </div>
+                    <div class="preview-text">Привет! Это пример того, как будет выглядеть пост в выбранной теме.</div>
+                    <div class="preview-code">
+                        <pre>print("Тема работает!")</pre>
+                    </div>
                 </div>
             </div>
         </div>
@@ -565,28 +713,30 @@
     </div>
 
     <script>
+        // ===== ПРИМЕНЕНИЕ ТЕМЫ =====
         function selectTheme(theme, element) {
-            // Убираем active у всех
+            // 1. Убираем active у всех
             document.querySelectorAll('.theme-option').forEach(opt => {
                 opt.classList.remove('active');
             });
-            // Добавляем active к выбранному
+            
+            // 2. Добавляем active к выбранному
             element.classList.add('active');
             
-            // Сохраняем в localStorage
-            localStorage.setItem('theme', theme);
-            
-            // Применяем тему
+            // 3. Мгновенно применяем тему ко всей странице
             document.body.setAttribute('data-theme', theme);
             
-            // Показываем уведомление
-            showNotification('Тема изменена');
+            // 4. Сохраняем в localStorage (чтобы index.html тоже подхватил)
+            localStorage.setItem('theme', theme);
+            
+            // 5. Показываем уведомление
+            showNotification('✓ Тема применена');
         }
 
         function toggleSwitch(element) {
             element.classList.toggle('active');
             const isActive = element.classList.contains('active');
-            showNotification(isActive ? 'Включено' : 'Выключено');
+            showNotification(isActive ? '✓ Включено' : '✗ Выключено');
         }
 
         function uploadAvatar(event) {
@@ -596,26 +746,31 @@
                 reader.onload = function(e) {
                     const avatar = document.querySelector('.profile-avatar');
                     avatar.innerHTML = `<img src="${e.target.result}" alt="Avatar">`;
-                    showNotification('Аватар обновлён');
+                    showNotification('✓ Аватар обновлён');
                 };
                 reader.readAsDataURL(file);
             }
         }
 
         function showNotification(message) {
+            // Удаляем старое уведомление, если есть
+            const old = document.querySelector('.notification-popup');
+            if (old) old.remove();
+
             const notification = document.createElement('div');
+            notification.className = 'notification-popup';
             notification.style.cssText = `
                 position: fixed;
                 top: 20px;
                 right: 20px;
                 background: var(--accent-primary);
-                color: #000;
+                color: var(--placeholder-color);
                 padding: 15px 25px;
                 border-radius: 8px;
                 font-weight: bold;
                 z-index: 10000;
-                animation: slideIn 0.3s;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                animation: slideIn 0.3s;
             `;
             notification.textContent = message;
             document.body.appendChild(notification);
@@ -626,11 +781,14 @@
             }, 2000);
         }
 
-        // Загружаем сохранённую тему
+        // ===== ЗАГРУЗКА СОХРАНЁННОЙ ТЕМЫ =====
         window.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme') || 'black';
+            
+            // Применяем тему
             document.body.setAttribute('data-theme', savedTheme);
             
+            // Подсвечиваем нужную опцию
             const themeOption = document.querySelector(`.theme-${savedTheme}`);
             if (themeOption) {
                 document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
