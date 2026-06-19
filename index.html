@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -15,11 +15,11 @@
             --bg-primary: #1a1a1a;
             --bg-secondary: #242424;
             --bg-tertiary: #2d2d2d;
-            --bg-card: #1f2a1f;
-            --green-primary: #00ff41;
-            --green-secondary: #39ff14;
-            --green-dark: #008f11;
-            --green-glow: rgba(0, 255, 65, 0.5);
+            --bg-card: #1f1f1f;
+            --accent-primary: #ffffff;
+            --accent-secondary: #e0e0e0;
+            --accent-dark: #666666;
+            --accent-glow: rgba(255, 255, 255, 0.3);
             --text-primary: #e0e0e0;
             --text-secondary: #888;
             --border: #333;
@@ -33,7 +33,6 @@
             overflow-x: hidden;
         }
 
-        /* Matrix фон */
         body::before {
             content: '';
             position: fixed;
@@ -42,8 +41,9 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 255, 65, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(57, 255, 20, 0.03) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, var(--accent-glow) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, var(--accent-glow) 0%, transparent 50%);
+            opacity: 0.02;
             pointer-events: none;
             z-index: 0;
         }
@@ -54,13 +54,13 @@
             top: 0;
             background: rgba(26, 26, 26, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--green-dark);
+            border-bottom: 1px solid var(--border);
             padding: 12px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             z-index: 100;
-            box-shadow: 0 2px 20px rgba(0, 255, 65, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
         }
 
         .logo {
@@ -69,23 +69,15 @@
             gap: 10px;
             font-size: 24px;
             font-weight: bold;
-            color: var(--green-primary);
-            text-shadow: 0 0 10px var(--green-glow);
+            color: var(--accent-primary);
             font-family: 'Courier New', monospace;
             letter-spacing: 2px;
         }
 
-        .logo-icon {
+        .logo img {
             width: 36px;
             height: 36px;
-            background: var(--green-primary);
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            font-weight: bold;
-            box-shadow: 0 0 15px var(--green-glow);
         }
 
         .search-bar {
@@ -108,8 +100,8 @@
 
         .search-bar input:focus {
             outline: none;
-            border-color: var(--green-primary);
-            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 10px var(--accent-glow);
         }
 
         .search-icon {
@@ -118,6 +110,8 @@
             top: 50%;
             transform: translateY(-50%);
             opacity: 0.6;
+            width: 18px;
+            height: 18px;
         }
 
         .header-actions {
@@ -141,9 +135,13 @@
         }
 
         .icon-btn:hover {
-            background: var(--green-dark);
-            border-color: var(--green-primary);
-            box-shadow: 0 0 10px var(--green-glow);
+            background: var(--accent-dark);
+            border-color: var(--accent-primary);
+        }
+
+        .icon-btn img {
+            width: 20px;
+            height: 20px;
         }
 
         .profile-btn {
@@ -152,8 +150,7 @@
             border-radius: 50%;
             overflow: hidden;
             cursor: pointer;
-            border: 2px solid var(--green-primary);
-            box-shadow: 0 0 10px var(--green-glow);
+            border: 2px solid var(--accent-primary);
             position: relative;
         }
 
@@ -166,7 +163,7 @@
         .profile-btn .placeholder {
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--green-primary), var(--green-dark));
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-dark));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -200,7 +197,7 @@
 
         .sidebar-title {
             padding: 0 20px;
-            color: var(--green-primary);
+            color: var(--accent-primary);
             font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -222,28 +219,25 @@
 
         .sidebar-item:hover {
             background: var(--bg-tertiary);
-            color: var(--green-primary);
-            border-left-color: var(--green-primary);
+            color: var(--accent-primary);
+            border-left-color: var(--accent-primary);
         }
 
         .sidebar-item.active {
-            background: rgba(0, 255, 65, 0.05);
-            color: var(--green-primary);
-            border-left-color: var(--green-primary);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--accent-primary);
+            border-left-color: var(--accent-primary);
         }
 
         .sidebar-icon {
             width: 20px;
             height: 20px;
-            fill: currentColor;
         }
 
-        .lang-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--green-primary);
-            box-shadow: 0 0 5px var(--green-glow);
+        .lang-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
         }
 
         /* ===== MAIN CONTENT ===== */
@@ -257,11 +251,10 @@
         /* ===== CREATE POST ===== */
         .create-post {
             background: var(--bg-card);
-            border: 1px solid var(--green-dark);
+            border: 1px solid var(--border);
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 30px;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.05);
         }
 
         .create-post-header {
@@ -277,7 +270,7 @@
             border-radius: 50%;
             overflow: hidden;
             cursor: pointer;
-            border: 2px solid var(--green-primary);
+            border: 2px solid var(--accent-primary);
             position: relative;
         }
 
@@ -290,7 +283,7 @@
         .create-post-avatar .placeholder {
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--green-primary), var(--green-dark));
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-dark));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -325,7 +318,7 @@
         }
 
         .create-post-input:hover {
-            border-color: var(--green-primary);
+            border-color: var(--accent-primary);
         }
 
         .create-post-actions {
@@ -352,27 +345,25 @@
         }
 
         .create-action-btn:hover {
-            background: var(--green-dark);
-            color: var(--green-primary);
-            border-color: var(--green-primary);
+            background: var(--accent-dark);
+            color: var(--accent-primary);
+            border-color: var(--accent-primary);
         }
 
         .create-action-btn.primary {
-            background: var(--green-primary);
+            background: var(--accent-primary);
             color: #000;
             font-weight: bold;
-            border-color: var(--green-primary);
+            border-color: var(--accent-primary);
         }
 
         .create-action-btn.primary:hover {
-            background: var(--green-secondary);
-            box-shadow: 0 0 15px var(--green-glow);
+            background: var(--accent-secondary);
         }
 
         .btn-icon {
             width: 18px;
             height: 18px;
-            fill: currentColor;
         }
 
         /* ===== FEED HEADER ===== */
@@ -397,16 +388,15 @@
         }
 
         .feed-tab:hover {
-            border-color: var(--green-primary);
-            color: var(--green-primary);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
         }
 
         .feed-tab.active {
-            background: var(--green-primary);
+            background: var(--accent-primary);
             color: #000;
-            border-color: var(--green-primary);
+            border-color: var(--accent-primary);
             font-weight: bold;
-            box-shadow: 0 0 10px var(--green-glow);
         }
 
         /* ===== POST CARD ===== */
@@ -422,12 +412,10 @@
         }
 
         .post-card:hover {
-            border-color: var(--green-primary);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+            border-color: var(--accent-primary);
             transform: translateY(-2px);
         }
 
-        /* Левая часть — контент */
         .post-content {
             flex: 1;
             padding: 20px;
@@ -445,8 +433,7 @@
             height: 48px;
             border-radius: 50%;
             overflow: hidden;
-            border: 2px solid var(--green-primary);
-            box-shadow: 0 0 10px var(--green-glow);
+            border: 2px solid var(--accent-primary);
             flex-shrink: 0;
         }
 
@@ -467,27 +454,21 @@
         }
 
         .author {
-            color: var(--green-primary);
+            color: var(--accent-primary);
             font-weight: bold;
             font-size: 15px;
-            text-shadow: 0 0 5px rgba(0, 255, 65, 0.3);
-        }
-
-        .verified {
-            color: var(--green-primary);
         }
 
         .verified-icon {
             width: 16px;
             height: 16px;
-            fill: var(--green-primary);
         }
 
         .follow-btn {
             padding: 4px 12px;
             background: transparent;
-            border: 1px solid var(--green-primary);
-            color: var(--green-primary);
+            border: 1px solid var(--accent-primary);
+            color: var(--accent-primary);
             border-radius: 15px;
             font-size: 12px;
             cursor: pointer;
@@ -495,7 +476,7 @@
         }
 
         .follow-btn:hover {
-            background: var(--green-primary);
+            background: var(--accent-primary);
             color: #000;
         }
 
@@ -510,12 +491,21 @@
 
         .language-badge {
             padding: 2px 8px;
-            background: rgba(0, 255, 65, 0.1);
-            border: 1px solid var(--green-dark);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--accent-dark);
             border-radius: 10px;
             font-size: 11px;
-            color: var(--green-primary);
+            color: var(--accent-primary);
             font-family: 'Courier New', monospace;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .language-badge img {
+            width: 14px;
+            height: 14px;
+            border-radius: 2px;
         }
 
         .description {
@@ -526,15 +516,14 @@
 
         .code-block {
             background: #000;
-            border: 1px solid var(--green-dark);
+            border: 1px solid var(--accent-dark);
             border-radius: 8px;
             padding: 15px;
             overflow-x: auto;
             position: relative;
             font-family: 'Courier New', monospace;
             font-size: 13px;
-            color: var(--green-primary);
-            box-shadow: inset 0 0 20px rgba(0, 255, 65, 0.05);
+            color: var(--accent-primary);
         }
 
         .code-block::before {
@@ -543,17 +532,16 @@
             top: 8px;
             right: 12px;
             font-size: 10px;
-            color: var(--green-dark);
+            color: var(--accent-dark);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* Видео-превью */
         .video-preview {
             margin-top: 15px;
             border-radius: 8px;
             overflow: hidden;
-            border: 1px solid var(--green-dark);
+            border: 1px solid var(--accent-dark);
             position: relative;
             background: #000;
         }
@@ -584,12 +572,11 @@
         .play-btn {
             width: 60px;
             height: 60px;
-            background: var(--green-primary);
+            background: var(--accent-primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 20px var(--green-glow);
             transition: all 0.3s;
         }
 
@@ -621,10 +608,8 @@
         .stat-icon {
             width: 16px;
             height: 16px;
-            fill: currentColor;
         }
 
-        /* Правая часть — действия */
         .post-actions {
             display: flex;
             flex-direction: column;
@@ -652,7 +637,6 @@
         .action-btn .icon {
             width: 28px;
             height: 28px;
-            fill: currentColor;
             transition: all 0.3s;
         }
 
@@ -662,12 +646,8 @@
         }
 
         .action-btn:hover {
-            color: var(--green-primary);
+            color: var(--accent-primary);
             transform: scale(1.1);
-        }
-
-        .action-btn:hover .icon {
-            filter: drop-shadow(0 0 5px var(--green-glow));
         }
 
         .action-btn.liked {
@@ -675,7 +655,6 @@
         }
 
         .action-btn.liked .icon {
-            fill: #ff0055;
             filter: drop-shadow(0 0 5px rgba(255, 0, 85, 0.5));
         }
 
@@ -700,11 +679,10 @@
             display: inline-block;
             width: 8px;
             height: 8px;
-            background: var(--green-primary);
+            background: var(--accent-primary);
             border-radius: 50%;
             margin-right: 5px;
             animation: pulse 2s infinite;
-            box-shadow: 0 0 5px var(--green-glow);
         }
 
         /* ===== SCROLLBAR ===== */
@@ -718,12 +696,12 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--green-dark);
+            background: var(--accent-dark);
             border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--green-primary);
+            background: var(--accent-primary);
         }
 
         /* ===== АДАПТИВНОСТЬ ===== */
@@ -762,7 +740,6 @@
             }
         }
 
-        /* Hidden file inputs */
         .hidden-input {
             display: none;
         }
@@ -772,30 +749,24 @@
     <!-- HEADER -->
     <header class="header">
         <div class="logo">
-            <div class="logo-icon">&lt;/&gt;</div>
+            <img src="logo.png" alt="DevNet">
             <span>DevNet</span>
         </div>
         
         <div class="search-bar">
             <input type="text" placeholder="Поиск кода, авторов, языков...">
-            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.35-4.35"></path>
-            </svg>
+            <img src="search.png" alt="Search" class="search-icon">
         </div>
         
         <div class="header-actions">
             <div class="icon-btn" title="Создать пост">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
+                <img src="add.png" alt="Add">
             </div>
             <div class="icon-btn" title="Уведомления">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                </svg>
+                <img src="notifications.png" alt="Notifications">
+            </div>
+            <div class="icon-btn" title="Настройки" onclick="window.location.href='settings.html'">
+                <img src="settings.png" alt="Settings">
             </div>
             <div class="profile-btn" onclick="document.getElementById('profileUpload').click()">
                 <div class="placeholder">U</div>
@@ -810,32 +781,19 @@
             <div class="sidebar-section">
                 <div class="sidebar-title">Меню</div>
                 <div class="sidebar-item active">
-                    <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                    </svg>
+                    <img src="home.png" alt="Home" class="sidebar-icon">
                     Главная
                 </div>
                 <div class="sidebar-item">
-                    <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path>
-                    </svg>
+                    <img src="trending.png" alt="Trending" class="sidebar-icon">
                     Популярное
                 </div>
                 <div class="sidebar-item">
-                    <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                        <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                    </svg>
+                    <img src="live.png" alt="Live" class="sidebar-icon">
                     <span class="live-indicator"></span> Live код
                 </div>
                 <div class="sidebar-item">
-                    <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="9" cy="7" r="4"></circle>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                    </svg>
+                    <img src="subscriptions.png" alt="Subscriptions" class="sidebar-icon">
                     Подписки
                 </div>
             </div>
@@ -843,31 +801,31 @@
             <div class="sidebar-section">
                 <div class="sidebar-title">Языки</div>
                 <div class="sidebar-item">
-                    <div class="lang-dot"></div>
+                    <img src="1.png" alt="Python" class="lang-icon">
                     Python
                 </div>
                 <div class="sidebar-item">
-                    <div class="lang-dot" style="background: #f7df1e; box-shadow: 0 0 5px rgba(247, 223, 30, 0.5);"></div>
+                    <img src="2.png" alt="JavaScript" class="lang-icon">
                     JavaScript
                 </div>
                 <div class="sidebar-item">
-                    <div class="lang-dot" style="background: #007acc; box-shadow: 0 0 5px rgba(0, 122, 204, 0.5);"></div>
+                    <img src="3.png" alt="TypeScript" class="lang-icon">
                     TypeScript
                 </div>
                 <div class="sidebar-item">
-                    <div class="lang-dot" style="background: #f34b7d; box-shadow: 0 0 5px rgba(243, 75, 125, 0.5);"></div>
+                    <img src="4.png" alt="C++" class="lang-icon">
                     C++
                 </div>
                 <div class="sidebar-item">
-                    <div class="lang-dot" style="background: #b07219; box-shadow: 0 0 5px rgba(176, 114, 25, 0.5);"></div>
+                    <img src="5.png" alt="Java" class="lang-icon">
                     Java
                 </div>
                 <div class="sidebar-item">
-                    <div class="lang-dot" style="background: #e34c26; box-shadow: 0 0 5px rgba(227, 76, 38, 0.5);"></div>
+                    <img src="6.png" alt="HTML/CSS" class="lang-icon">
                     HTML/CSS
                 </div>
                 <div class="sidebar-item">
-                    <div class="lang-dot" style="background: #701516; box-shadow: 0 0 5px rgba(112, 21, 22, 0.5);"></div>
+                    <img src="7.png" alt="Ruby" class="lang-icon">
                     Ruby
                 </div>
             </div>
@@ -875,24 +833,15 @@
             <div class="sidebar-section">
                 <div class="sidebar-title">Библиотека</div>
                 <div class="sidebar-item">
-                    <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                        <polyline points="7 3 7 8 15 8"></polyline>
-                    </svg>
+                    <img src="saved.png" alt="Saved" class="sidebar-icon">
                     Сохранённое
                 </div>
                 <div class="sidebar-item">
-                    <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <polyline points="12 6 12 12 16 14"></polyline>
-                    </svg>
+                    <img src="history.png" alt="History" class="sidebar-icon">
                     История
                 </div>
                 <div class="sidebar-item">
-                    <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                    </svg>
+                    <img src="favorites.png" alt="Favorites" class="sidebar-icon">
                     Избранное
                 </div>
             </div>
@@ -911,24 +860,15 @@
                 </div>
                 <div class="create-post-actions">
                     <div class="create-action-btn">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
-                        </svg>
+                        <img src="file.png" alt="File" class="btn-icon">
                         Файл
                     </div>
                     <div class="create-action-btn">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                            <polyline points="21 15 16 10 5 21"></polyline>
-                        </svg>
+                        <img src="image.png" alt="Image" class="btn-icon">
                         Скрин
                     </div>
                     <div class="create-action-btn">
-                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="23 7 16 12 23 17 23 7"></polygon>
-                            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
-                        </svg>
+                        <img src="video.png" alt="Video" class="btn-icon">
                         Видео
                     </div>
                     <div class="create-action-btn primary">Опубликовать</div>
@@ -951,25 +891,23 @@
                     <div class="post-content">
                         <div class="post-header">
                             <div class="avatar">
-                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect width='48' height='48' fill='%2300ff41'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-size='24' font-weight='bold' fill='%23000'%3EP%3C/text%3E%3C/svg%3E" alt="Avatar">
+                                <img src="avatar1.png" alt="Avatar">
                             </div>
                             <div class="post-info">
                                 <div class="author-row">
                                     <span class="author">@python_guru</span>
-                                    <svg class="verified-icon" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
+                                    <img src="verified.png" alt="Verified" class="verified-icon">
                                     <button class="follow-btn">+ Подписаться</button>
                                 </div>
                                 <div class="meta">
                                     <span>2 часа назад</span>
-                                    <span class="language-badge">PYTHON</span>
+                                    <span class="language-badge">
+                                        <img src="1.png" alt="Python">
+                                        PYTHON
+                                    </span>
                                     <span>•</span>
                                     <span class="stat-item">
-                                        <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                            <circle cx="12" cy="12" r="3"></circle>
-                                        </svg>
+                                        <img src="views.png" alt="Views" class="stat-icon">
                                         1.2K
                                     </span>
                                 </div>
@@ -990,51 +928,30 @@ def say_hello():
                         </div>
                         <div class="post-stats">
                             <span class="stat-item">
-                                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                                </svg>
+                                <img src="comments.png" alt="Comments" class="stat-icon">
                                 24 комментария
                             </span>
                             <span class="stat-item">
-                                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="17 1 21 5 17 9"></polyline>
-                                    <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
-                                    <polyline points="7 23 3 19 7 15"></polyline>
-                                    <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
-                                </svg>
+                                <img src="repost.png" alt="Repost" class="stat-icon">
                                 12 репостов
                             </span>
                         </div>
                     </div>
                     <div class="post-actions">
                         <button class="action-btn" onclick="toggleLike(this)">
-                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                            </svg>
+                            <img src="heart.png" alt="Like" class="icon">
                             <span class="count">342</span>
                         </button>
                         <button class="action-btn">
-                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                            </svg>
+                            <img src="comments.png" alt="Comments" class="icon">
                             <span class="count">24</span>
                         </button>
                         <button class="action-btn">
-                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="18" cy="5" r="3"></circle>
-                                <circle cx="6" cy="12" r="3"></circle>
-                                <circle cx="18" cy="19" r="3"></circle>
-                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                            </svg>
+                            <img src="share.png" alt="Share" class="icon">
                             <span class="count">Share</span>
                         </button>
                         <button class="action-btn">
-                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                                <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                                <polyline points="7 3 7 8 15 8"></polyline>
-                            </svg>
+                            <img src="save.png" alt="Save" class="icon">
                             <span class="count">Save</span>
                         </button>
                     </div>
@@ -1045,25 +962,23 @@ def say_hello():
                     <div class="post-content">
                         <div class="post-header">
                             <div class="avatar">
-                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect width='48' height='48' fill='%23f7df1e'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-size='24' font-weight='bold' fill='%23000'%3EJ%3C/text%3E%3C/svg%3E" alt="Avatar">
+                                <img src="avatar2.png" alt="Avatar">
                             </div>
                             <div class="post-info">
                                 <div class="author-row">
                                     <span class="author">@js_ninja</span>
-                                    <svg class="verified-icon" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
+                                    <img src="verified.png" alt="Verified" class="verified-icon">
                                     <button class="follow-btn">+ Подписаться</button>
                                 </div>
                                 <div class="meta">
                                     <span>5 часов назад</span>
-                                    <span class="language-badge" style="background: rgba(247, 223, 30, 0.1); border-color: #b8860b; color: #f7df1e;">JAVASCRIPT</span>
+                                    <span class="language-badge">
+                                        <img src="2.png" alt="JavaScript">
+                                        JAVASCRIPT
+                                    </span>
                                     <span>•</span>
                                     <span class="stat-item">
-                                        <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                            <circle cx="12" cy="12" r="3"></circle>
-                                        </svg>
+                                        <img src="views.png" alt="Views" class="stat-icon">
                                         3.5K
                                     </span>
                                 </div>
@@ -1093,51 +1008,30 @@ console.log(randomColor()); // #a3f2c1</pre>
                         </div>
                         <div class="post-stats">
                             <span class="stat-item">
-                                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                                </svg>
+                                <img src="comments.png" alt="Comments" class="stat-icon">
                                 89 комментариев
                             </span>
                             <span class="stat-item">
-                                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="17 1 21 5 17 9"></polyline>
-                                    <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
-                                    <polyline points="7 23 3 19 7 15"></polyline>
-                                    <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
-                                </svg>
+                                <img src="repost.png" alt="Repost" class="stat-icon">
                                 156 репостов
                             </span>
                         </div>
                     </div>
                     <div class="post-actions">
                         <button class="action-btn liked" onclick="toggleLike(this)">
-                            <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                            </svg>
+                            <img src="heart-filled.png" alt="Like" class="icon">
                             <span class="count">1.2K</span>
                         </button>
                         <button class="action-btn">
-                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                            </svg>
+                            <img src="comments.png" alt="Comments" class="icon">
                             <span class="count">89</span>
                         </button>
                         <button class="action-btn">
-                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="18" cy="5" r="3"></circle>
-                                <circle cx="6" cy="12" r="3"></circle>
-                                <circle cx="18" cy="19" r="3"></circle>
-                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                            </svg>
+                            <img src="share.png" alt="Share" class="icon">
                             <span class="count">Share</span>
                         </button>
                         <button class="action-btn">
-                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                                <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                                <polyline points="7 3 7 8 15 8"></polyline>
-                            </svg>
+                            <img src="save.png" alt="Save" class="icon">
                             <span class="count">Save</span>
                         </button>
                     </div>
@@ -1148,7 +1042,7 @@ console.log(randomColor()); // #a3f2c1</pre>
                     <div class="post-content">
                         <div class="post-header">
                             <div class="avatar">
-                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect width='48' height='48' fill='%23e34c26'/%3E%3Ctext x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-size='24' font-weight='bold' fill='%23000'%3EH%3C/text%3E%3C/svg%3E" alt="Avatar">
+                                <img src="avatar3.png" alt="Avatar">
                             </div>
                             <div class="post-info">
                                 <div class="author-row">
@@ -1157,13 +1051,13 @@ console.log(randomColor()); // #a3f2c1</pre>
                                 </div>
                                 <div class="meta">
                                     <span>вчера</span>
-                                    <span class="language-badge" style="background: rgba(227, 76, 38, 0.1); border-color: #8b0000; color: #e34c26;">HTML</span>
+                                    <span class="language-badge">
+                                        <img src="6.png" alt="HTML">
+                                        HTML
+                                    </span>
                                     <span>•</span>
                                     <span class="stat-item">
-                                        <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                            <circle cx="12" cy="12" r="3"></circle>
-                                        </svg>
+                                        <img src="views.png" alt="Views" class="stat-icon">
                                         856
                                     </span>
                                 </div>
@@ -1187,51 +1081,30 @@ console.log(randomColor()); // #a3f2c1</pre>
                         </div>
                         <div class="post-stats">
                             <span class="stat-item">
-                                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                                </svg>
+                                <img src="comments.png" alt="Comments" class="stat-icon">
                                 15 комментариев
                             </span>
                             <span class="stat-item">
-                                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polyline points="17 1 21 5 17 9"></polyline>
-                                    <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
-                                    <polyline points="7 23 3 19 7 15"></polyline>
-                                    <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
-                                </svg>
+                                <img src="repost.png" alt="Repost" class="stat-icon">
                                 42 репоста
                             </span>
                         </div>
                     </div>
                     <div class="post-actions">
                         <button class="action-btn" onclick="toggleLike(this)">
-                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                            </svg>
+                            <img src="heart.png" alt="Like" class="icon">
                             <span class="count">128</span>
                         </button>
                         <button class="action-btn">
-                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                            </svg>
+                            <img src="comments.png" alt="Comments" class="icon">
                             <span class="count">15</span>
                         </button>
                         <button class="action-btn">
-                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="18" cy="5" r="3"></circle>
-                                <circle cx="6" cy="12" r="3"></circle>
-                                <circle cx="18" cy="19" r="3"></circle>
-                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                            </svg>
+                            <img src="share.png" alt="Share" class="icon">
                             <span class="count">Share</span>
                         </button>
                         <button class="action-btn">
-                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-                                <polyline points="17 21 17 13 7 13 7 21"></polyline>
-                                <polyline points="7 3 7 8 15 8"></polyline>
-                            </svg>
+                            <img src="save.png" alt="Save" class="icon">
                             <span class="count">Save</span>
                         </button>
                     </div>
