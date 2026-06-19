@@ -11,6 +11,7 @@
             box-sizing: border-box;
         }
 
+        /* ===== БАЗОВЫЕ ПЕРЕМЕННЫЕ (чёрная тема) ===== */
         :root {
             --bg-primary: #1a1a1a;
             --bg-secondary: #242424;
@@ -23,6 +24,59 @@
             --text-primary: #e0e0e0;
             --text-secondary: #888;
             --border: #333;
+            --code-bg: #000;
+            --placeholder-color: #000;
+        }
+
+        /* ===== БЕЛАЯ ТЕМА ===== */
+        body[data-theme="white"] {
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #e8e8e8;
+            --bg-card: #ffffff;
+            --accent-primary: #1a1a1a;
+            --accent-secondary: #333333;
+            --accent-dark: #cccccc;
+            --accent-glow: rgba(0, 0, 0, 0.15);
+            --text-primary: #1a1a1a;
+            --text-secondary: #666;
+            --border: #ddd;
+            --code-bg: #2d2d2d;
+            --placeholder-color: #fff;
+        }
+
+        /* ===== ЗЕЛЁНАЯ ТЕМА ===== */
+        body[data-theme="green"] {
+            --bg-primary: #0a1a0a;
+            --bg-secondary: #0f240f;
+            --bg-tertiary: #143014;
+            --bg-card: #0d1f0d;
+            --accent-primary: #00ff41;
+            --accent-secondary: #39ff14;
+            --accent-dark: #008f11;
+            --accent-glow: rgba(0, 255, 65, 0.5);
+            --text-primary: #d0ffd0;
+            --text-secondary: #6aaa6a;
+            --border: #1a3a1a;
+            --code-bg: #000;
+            --placeholder-color: #000;
+        }
+
+        /* ===== СИНЯЯ ТЕМА ===== */
+        body[data-theme="blue"] {
+            --bg-primary: #0a0f1a;
+            --bg-secondary: #0f1824;
+            --bg-tertiary: #142030;
+            --bg-card: #0d151f;
+            --accent-primary: #0080ff;
+            --accent-secondary: #00a8ff;
+            --accent-dark: #0055aa;
+            --accent-glow: rgba(0, 128, 255, 0.5);
+            --text-primary: #d0e0ff;
+            --text-secondary: #6a8aaa;
+            --border: #1a2a3a;
+            --code-bg: #000;
+            --placeholder-color: #000;
         }
 
         body {
@@ -31,6 +85,7 @@
             font-family: 'Segoe UI', Tahoma, sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
+            transition: background 0.4s ease, color 0.4s ease;
         }
 
         body::before {
@@ -61,6 +116,11 @@
             justify-content: space-between;
             z-index: 100;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+            transition: background 0.4s ease;
+        }
+
+        body[data-theme="white"] .header {
+            background: rgba(255, 255, 255, 0.95);
         }
 
         .logo {
@@ -72,6 +132,7 @@
             color: var(--accent-primary);
             font-family: 'Courier New', monospace;
             letter-spacing: 2px;
+            transition: color 0.4s ease;
         }
 
         .logo img {
@@ -152,6 +213,7 @@
             cursor: pointer;
             border: 2px solid var(--accent-primary);
             position: relative;
+            transition: border-color 0.4s ease;
         }
 
         .profile-btn img {
@@ -167,9 +229,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #000;
+            color: var(--placeholder-color);
             font-weight: bold;
             font-size: 18px;
+            transition: all 0.4s ease;
         }
 
         /* ===== LAYOUT ===== */
@@ -189,6 +252,7 @@
             border-right: 1px solid var(--border);
             padding: 20px 0;
             overflow-y: auto;
+            transition: background 0.4s ease;
         }
 
         .sidebar-section {
@@ -203,6 +267,7 @@
             letter-spacing: 1px;
             margin-bottom: 10px;
             font-family: 'Courier New', monospace;
+            transition: color 0.4s ease;
         }
 
         .sidebar-item {
@@ -224,7 +289,7 @@
         }
 
         .sidebar-item.active {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--bg-tertiary);
             color: var(--accent-primary);
             border-left-color: var(--accent-primary);
         }
@@ -255,6 +320,7 @@
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 30px;
+            transition: background 0.4s ease;
         }
 
         .create-post-header {
@@ -272,6 +338,7 @@
             cursor: pointer;
             border: 2px solid var(--accent-primary);
             position: relative;
+            transition: border-color 0.4s ease;
         }
 
         .create-post-avatar img {
@@ -287,9 +354,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #000;
+            color: var(--placeholder-color);
             font-weight: bold;
             font-size: 18px;
+            transition: all 0.4s ease;
         }
 
         .create-post-avatar:hover::after {
@@ -352,9 +420,10 @@
 
         .create-action-btn.primary {
             background: var(--accent-primary);
-            color: #000;
+            color: var(--placeholder-color);
             font-weight: bold;
             border-color: var(--accent-primary);
+            transition: all 0.4s ease;
         }
 
         .create-action-btn.primary:hover {
@@ -366,7 +435,7 @@
             height: 18px;
         }
 
-        /* ===== FEED HEADER ===== */
+        /* ===== FEED TABS ===== */
         .feed-tabs {
             display: flex;
             gap: 10px;
@@ -394,9 +463,10 @@
 
         .feed-tab.active {
             background: var(--accent-primary);
-            color: #000;
+            color: var(--placeholder-color);
             border-color: var(--accent-primary);
             font-weight: bold;
+            transition: all 0.4s ease;
         }
 
         /* ===== POST CARD ===== */
@@ -435,6 +505,7 @@
             overflow: hidden;
             border: 2px solid var(--accent-primary);
             flex-shrink: 0;
+            transition: border-color 0.4s ease;
         }
 
         .avatar img {
@@ -457,6 +528,7 @@
             color: var(--accent-primary);
             font-weight: bold;
             font-size: 15px;
+            transition: color 0.4s ease;
         }
 
         .verified-icon {
@@ -477,7 +549,7 @@
 
         .follow-btn:hover {
             background: var(--accent-primary);
-            color: #000;
+            color: var(--placeholder-color);
         }
 
         .meta {
@@ -491,7 +563,7 @@
 
         .language-badge {
             padding: 2px 8px;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--bg-tertiary);
             border: 1px solid var(--accent-dark);
             border-radius: 10px;
             font-size: 11px;
@@ -500,6 +572,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            transition: all 0.4s ease;
         }
 
         .language-badge img {
@@ -515,7 +588,7 @@
         }
 
         .code-block {
-            background: #000;
+            background: var(--code-bg);
             border: 1px solid var(--accent-dark);
             border-radius: 8px;
             padding: 15px;
@@ -524,6 +597,7 @@
             font-family: 'Courier New', monospace;
             font-size: 13px;
             color: var(--accent-primary);
+            transition: all 0.4s ease;
         }
 
         .code-block::before {
@@ -543,7 +617,7 @@
             overflow: hidden;
             border: 1px solid var(--accent-dark);
             position: relative;
-            background: #000;
+            background: var(--code-bg);
         }
 
         .video-preview video {
@@ -587,7 +661,7 @@
         .play-icon {
             width: 24px;
             height: 24px;
-            fill: #000;
+            fill: var(--placeholder-color);
             margin-left: 4px;
         }
 
@@ -619,6 +693,7 @@
             border-left: 1px solid var(--border);
             align-items: center;
             justify-content: center;
+            transition: background 0.4s ease;
         }
 
         .action-btn {
@@ -683,6 +758,7 @@
             border-radius: 50%;
             margin-right: 5px;
             animation: pulse 2s infinite;
+            transition: background 0.4s ease;
         }
 
         /* ===== SCROLLBAR ===== */
@@ -745,7 +821,7 @@
         }
     </style>
 </head>
-<body>
+<body data-theme="black">
     <!-- HEADER -->
     <header class="header">
         <div class="logo">
@@ -993,7 +1069,6 @@ def say_hello():
 
 console.log(randomColor()); // #a3f2c1</pre>
                         </div>
-                        <!-- Видео-превью -->
                         <div class="video-preview" onclick="playVideo(this)">
                             <video muted loop>
                                 <source src="" type="video/mp4">
@@ -1114,6 +1189,25 @@ console.log(randomColor()); // #a3f2c1</pre>
     </div>
 
     <script>
+        // ===== ПРИМЕНЕНИЕ СОХРАНЁННОЙ ТЕМЫ ПРИ ЗАГРУЗКЕ =====
+        function applyTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+        }
+
+        // Загружаем тему при старте
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'black';
+            applyTheme(savedTheme);
+        });
+
+        // Слушаем изменения темы (если открыли settings.html в другой вкладке)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme' && e.newValue) {
+                applyTheme(e.newValue);
+            }
+        });
+
+        // ===== ОСТАЛЬНОЙ JS =====
         function toggleLike(btn) {
             btn.classList.toggle('liked');
             const countSpan = btn.querySelector('.count');
