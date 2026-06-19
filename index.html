@@ -11,7 +11,7 @@
             box-sizing: border-box;
         }
 
-        /* ===== БАЗОВЫЕ ПЕРЕМЕННЫЕ (чёрная тема) ===== */
+        /* ===== БАЗОВЫЕ ПЕРЕМЕННЫЕ ===== */
         :root {
             --bg-primary: #1a1a1a;
             --bg-secondary: #242424;
@@ -24,8 +24,10 @@
             --text-primary: #e0e0e0;
             --text-secondary: #888;
             --border: #333;
-            --code-bg: #000;
+            --code-bg: #000000; /* Черный фон кода по умолчанию */
+            --code-text: #00ff41; /* Зеленый текст кода */
             --placeholder-color: #000;
+            --sidebar-width: 240px;
         }
 
         /* ===== БЕЛАЯ ТЕМА ===== */
@@ -41,7 +43,8 @@
             --text-primary: #1a1a1a;
             --text-secondary: #666;
             --border: #ddd;
-            --code-bg: #2d2d2d;
+            --code-bg: #2d2d2d; /* Темно-серый фон для контраста */
+            --code-text: #ffffff; /* Белый текст кода */
             --placeholder-color: #fff;
         }
 
@@ -58,7 +61,8 @@
             --text-primary: #d0ffd0;
             --text-secondary: #6aaa6a;
             --border: #1a3a1a;
-            --code-bg: #000;
+            --code-bg: #000000;
+            --code-text: #00ff41;
             --placeholder-color: #000;
         }
 
@@ -75,7 +79,8 @@
             --text-primary: #d0e0ff;
             --text-secondary: #6a8aaa;
             --border: #1a2a3a;
-            --code-bg: #000;
+            --code-bg: #000000;
+            --code-text: #0080ff;
             --placeholder-color: #000;
         }
 
@@ -86,21 +91,6 @@
             min-height: 100vh;
             overflow-x: hidden;
             transition: background 0.4s ease, color 0.4s ease;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, var(--accent-glow) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, var(--accent-glow) 0%, transparent 50%);
-            opacity: 0.02;
-            pointer-events: none;
-            z-index: 0;
         }
 
         /* ===== HEADER ===== */
@@ -123,6 +113,47 @@
             background: rgba(255, 255, 255, 0.95);
         }
 
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-btn {
+            width: 40px;
+            height: 40px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            padding: 0;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .menu-btn:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .menu-line {
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        body.menu-open .menu-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        body.menu-open .menu-line:nth-child(2) { opacity: 0; }
+        body.menu-open .menu-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        body.menu-collapsed .menu-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        body.menu-collapsed .menu-line:nth-child(2) { opacity: 0; }
+        body.menu-collapsed .menu-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
         .logo {
             display: flex;
             align-items: center;
@@ -133,6 +164,7 @@
             font-family: 'Courier New', monospace;
             letter-spacing: 2px;
             transition: color 0.4s ease;
+            text-decoration: none;
         }
 
         .logo img {
@@ -235,16 +267,15 @@
             transition: all 0.4s ease;
         }
 
-        /* ===== LAYOUT ===== */
+        /* ===== LAYOUT & SIDEBAR ===== */
         .layout {
             display: flex;
             position: relative;
             z-index: 1;
         }
 
-        /* ===== SIDEBAR ===== */
         .sidebar {
-            width: 240px;
+            width: var(--sidebar-width);
             height: calc(100vh - 65px);
             position: sticky;
             top: 65px;
@@ -252,7 +283,60 @@
             border-right: 1px solid var(--border);
             padding: 20px 0;
             overflow-y: auto;
-            transition: background 0.4s ease;
+            transition: background 0.4s ease, transform 0.3s ease, width 0.3s ease;
+            flex-shrink: 0;
+            z-index: 90;
+        }
+
+        body.menu-collapsed .sidebar {
+            width: 70px;
+        }
+        
+        body.menu-collapsed .sidebar-title,
+        body.menu-collapsed .sidebar-item span:not(.sidebar-icon):not(.lang-icon):not(.live-indicator) {
+            display: none;
+        }
+
+        body.menu-collapsed .sidebar-item {
+            justify-content: center;
+            padding: 15px 0;
+        }
+
+        body.menu-collapsed .sidebar-icon, 
+        body.menu-collapsed .lang-icon {
+            margin: 0;
+        }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 65px;
+                height: calc(100vh - 65px);
+                transform: translateX(-100%);
+                width: 260px !important;
+                box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+            }
+
+            body.menu-open .sidebar {
+                transform: translateX(0);
+            }
+
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 65px;
+                left: 0;
+                width: 100%;
+                height: calc(100vh - 65px);
+                background: rgba(0, 0, 0, 0.7);
+                z-index: 80;
+                backdrop-filter: blur(2px);
+            }
+
+            body.menu-open .overlay {
+                display: block;
+            }
         }
 
         .sidebar-section {
@@ -280,6 +364,7 @@
             color: var(--text-secondary);
             font-size: 14px;
             border-left: 3px solid transparent;
+            white-space: nowrap;
         }
 
         .sidebar-item:hover {
@@ -297,12 +382,14 @@
         .sidebar-icon {
             width: 20px;
             height: 20px;
+            min-width: 20px;
         }
 
         .lang-icon {
             width: 20px;
             height: 20px;
             border-radius: 4px;
+            min-width: 20px;
         }
 
         /* ===== MAIN CONTENT ===== */
@@ -311,6 +398,7 @@
             padding: 20px;
             max-width: 900px;
             margin: 0 auto;
+            width: 100%;
         }
 
         /* ===== CREATE POST ===== */
@@ -361,7 +449,7 @@
         }
 
         .create-post-avatar:hover::after {
-            content: '📷';
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
@@ -587,6 +675,7 @@
             color: var(--text-primary);
         }
 
+        /* ИСПРАВЛЕНИЕ КОДА ДЛЯ ВСЕХ ТЕМ */
         .code-block {
             background: var(--code-bg);
             border: 1px solid var(--accent-dark);
@@ -596,7 +685,7 @@
             position: relative;
             font-family: 'Courier New', monospace;
             font-size: 13px;
-            color: var(--accent-primary);
+            color: var(--code-text); /* Используем переменную цвета текста */
             transition: all 0.4s ease;
         }
 
@@ -684,10 +773,11 @@
             height: 16px;
         }
 
+        /* ===== НОВЫЙ СТИЛЬ ДЕЙСТВИЙ (АВАТАРКИ) ===== */
         .post-actions {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
             padding: 20px 15px;
             background: var(--bg-secondary);
             border-left: 1px solid var(--border);
@@ -700,37 +790,59 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             background: transparent;
             border: none;
             color: var(--text-secondary);
             cursor: pointer;
             transition: all 0.3s;
-            padding: 5px;
+            padding: 0;
         }
 
-        .action-btn .icon {
-            width: 28px;
-            height: 28px;
+        /* Круглая аватарка вместо иконки */
+        .action-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
             transition: all 0.3s;
+            position: relative;
+        }
+
+        .action-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Эффект при наведении */
+        .action-btn:hover .action-avatar {
+            transform: scale(1.15);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        /* Активное состояние (лайк) */
+        .action-btn.liked .action-avatar {
+            background: #ff0055;
+            border-color: #ff0055;
+            box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+        }
+
+        .action-btn.liked .count {
+            color: #ff0055;
+            font-weight: 800;
         }
 
         .action-btn .count {
             font-size: 12px;
             font-weight: bold;
-        }
-
-        .action-btn:hover {
-            color: var(--accent-primary);
-            transform: scale(1.1);
-        }
-
-        .action-btn.liked {
-            color: #ff0055;
-        }
-
-        .action-btn.liked .icon {
-            filter: drop-shadow(0 0 5px rgba(255, 0, 85, 0.5));
+            transition: color 0.3s;
         }
 
         /* ===== АНИМАЦИИ ===== */
@@ -781,15 +893,6 @@
         }
 
         /* ===== АДАПТИВНОСТЬ ===== */
-        @media (max-width: 900px) {
-            .sidebar {
-                display: none;
-            }
-            .main {
-                padding: 15px;
-            }
-        }
-
         @media (max-width: 600px) {
             .header {
                 padding: 10px 15px;
@@ -809,10 +912,15 @@
                 border-top: 1px solid var(--border);
                 justify-content: space-around;
                 padding: 15px;
+                gap: 15px;
             }
             .action-btn {
-                flex-direction: row;
-                gap: 8px;
+                flex-direction: column;
+                gap: 4px;
+            }
+            .action-avatar {
+                width: 38px;
+                height: 38px;
             }
         }
 
@@ -822,11 +930,24 @@
     </style>
 </head>
 <body data-theme="black">
+    
+    <!-- Затемнение фона для мобильного меню -->
+    <div class="overlay" onclick="toggleMenu()"></div>
+
     <!-- HEADER -->
     <header class="header">
-        <div class="logo">
-            <img src="logo.png" alt="DevNet">
-            <span>DevNet</span>
+        <div class="header-left">
+            <!-- КНОПКА МЕНЮ (ТРИ ПОЛОСКИ) -->
+            <button class="menu-btn" onclick="toggleMenu()" title="Меню">
+                <div class="menu-line"></div>
+                <div class="menu-line"></div>
+                <div class="menu-line"></div>
+            </button>
+
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="DevNet">
+                <span>DevNet</span>
+            </a>
         </div>
         
         <div class="search-bar">
@@ -852,25 +973,26 @@
     </header>
 
     <div class="layout">
-        <!-- SIDEBAR -->
+        <!-- SIDEBAR (МЕНЮ) -->
         <aside class="sidebar">
             <div class="sidebar-section">
                 <div class="sidebar-title">Меню</div>
                 <div class="sidebar-item active">
                     <img src="home.png" alt="Home" class="sidebar-icon">
-                    Главная
+                    <span>Главная</span>
                 </div>
                 <div class="sidebar-item">
                     <img src="trending.png" alt="Trending" class="sidebar-icon">
-                    Популярное
+                    <span>Популярное</span>
                 </div>
                 <div class="sidebar-item">
                     <img src="live.png" alt="Live" class="sidebar-icon">
-                    <span class="live-indicator"></span> Live код
+                    <span class="live-indicator"></span> 
+                    <span>Live код</span>
                 </div>
                 <div class="sidebar-item">
                     <img src="subscriptions.png" alt="Subscriptions" class="sidebar-icon">
-                    Подписки
+                    <span>Подписки</span>
                 </div>
             </div>
 
@@ -878,31 +1000,31 @@
                 <div class="sidebar-title">Языки</div>
                 <div class="sidebar-item">
                     <img src="1.png" alt="Python" class="lang-icon">
-                    Python
+                    <span>Python</span>
                 </div>
                 <div class="sidebar-item">
                     <img src="2.png" alt="JavaScript" class="lang-icon">
-                    JavaScript
+                    <span>JavaScript</span>
                 </div>
                 <div class="sidebar-item">
                     <img src="3.png" alt="TypeScript" class="lang-icon">
-                    TypeScript
+                    <span>TypeScript</span>
                 </div>
                 <div class="sidebar-item">
                     <img src="4.png" alt="C++" class="lang-icon">
-                    C++
+                    <span>C++</span>
                 </div>
                 <div class="sidebar-item">
                     <img src="5.png" alt="Java" class="lang-icon">
-                    Java
+                    <span>Java</span>
                 </div>
                 <div class="sidebar-item">
                     <img src="6.png" alt="HTML/CSS" class="lang-icon">
-                    HTML/CSS
+                    <span>HTML/CSS</span>
                 </div>
                 <div class="sidebar-item">
                     <img src="7.png" alt="Ruby" class="lang-icon">
-                    Ruby
+                    <span>Ruby</span>
                 </div>
             </div>
 
@@ -910,15 +1032,15 @@
                 <div class="sidebar-title">Библиотека</div>
                 <div class="sidebar-item">
                     <img src="saved.png" alt="Saved" class="sidebar-icon">
-                    Сохранённое
+                    <span>Сохранённое</span>
                 </div>
                 <div class="sidebar-item">
                     <img src="history.png" alt="History" class="sidebar-icon">
-                    История
+                    <span>История</span>
                 </div>
                 <div class="sidebar-item">
                     <img src="favorites.png" alt="Favorites" class="sidebar-icon">
-                    Избранное
+                    <span>Избранное</span>
                 </div>
             </div>
         </aside>
@@ -1013,21 +1135,38 @@ def say_hello():
                             </span>
                         </div>
                     </div>
+                    
+                    <!-- ПРАВАЯ ПАНЕЛЬ С АВАТАРКАМИ -->
                     <div class="post-actions">
+                        <!-- Лайк -->
                         <button class="action-btn" onclick="toggleLike(this)">
-                            <img src="heart.png" alt="Like" class="icon">
+                            <div class="action-avatar">
+                                <img src="heart-avatar.png" alt="Like">
+                            </div>
                             <span class="count">342</span>
                         </button>
+                        
+                        <!-- Комментарии -->
                         <button class="action-btn">
-                            <img src="comments.png" alt="Comments" class="icon">
+                            <div class="action-avatar">
+                                <img src="comment-avatar.png" alt="Comment">
+                            </div>
                             <span class="count">24</span>
                         </button>
+                        
+                        <!-- Репост -->
                         <button class="action-btn">
-                            <img src="share.png" alt="Share" class="icon">
-                            <span class="count">Share</span>
+                            <div class="action-avatar">
+                                <img src="share-avatar.png" alt="Share">
+                            </div>
+                            <span class="count">12</span>
                         </button>
+                        
+                        <!-- Сохранить -->
                         <button class="action-btn">
-                            <img src="save.png" alt="Save" class="icon">
+                            <div class="action-avatar">
+                                <img src="save-avatar.png" alt="Save">
+                            </div>
                             <span class="count">Save</span>
                         </button>
                     </div>
@@ -1092,21 +1231,31 @@ console.log(randomColor()); // #a3f2c1</pre>
                             </span>
                         </div>
                     </div>
+                    
+                    <!-- ПРАВАЯ ПАНЕЛЬ С АВАТАРКАМИ -->
                     <div class="post-actions">
                         <button class="action-btn liked" onclick="toggleLike(this)">
-                            <img src="heart-filled.png" alt="Like" class="icon">
+                            <div class="action-avatar">
+                                <img src="heart-filled-avatar.png" alt="Like">
+                            </div>
                             <span class="count">1.2K</span>
                         </button>
                         <button class="action-btn">
-                            <img src="comments.png" alt="Comments" class="icon">
+                            <div class="action-avatar">
+                                <img src="comment-avatar.png" alt="Comment">
+                            </div>
                             <span class="count">89</span>
                         </button>
                         <button class="action-btn">
-                            <img src="share.png" alt="Share" class="icon">
-                            <span class="count">Share</span>
+                            <div class="action-avatar">
+                                <img src="share-avatar.png" alt="Share">
+                            </div>
+                            <span class="count">156</span>
                         </button>
                         <button class="action-btn">
-                            <img src="save.png" alt="Save" class="icon">
+                            <div class="action-avatar">
+                                <img src="save-avatar.png" alt="Save">
+                            </div>
                             <span class="count">Save</span>
                         </button>
                     </div>
@@ -1138,7 +1287,7 @@ console.log(randomColor()); // #a3f2c1</pre>
                                 </div>
                             </div>
                         </div>
-                        <p class="description">Семантическая вёрстка — must have! Вот правильный шаблон страницы 📄</p>
+                        <p class="description">Семантическая вёрстка — must have! Вот правильный шаблон страницы </p>
                         <div class="code-block" data-lang="html">
 <pre>&lt;!DOCTYPE html&gt;
 &lt;html lang="ru"&gt;
@@ -1165,21 +1314,31 @@ console.log(randomColor()); // #a3f2c1</pre>
                             </span>
                         </div>
                     </div>
+                    
+                    <!-- ПРАВАЯ ПАНЕЛЬ С АВАТАРКАМИ -->
                     <div class="post-actions">
                         <button class="action-btn" onclick="toggleLike(this)">
-                            <img src="heart.png" alt="Like" class="icon">
+                            <div class="action-avatar">
+                                <img src="heart-avatar.png" alt="Like">
+                            </div>
                             <span class="count">128</span>
                         </button>
                         <button class="action-btn">
-                            <img src="comments.png" alt="Comments" class="icon">
+                            <div class="action-avatar">
+                                <img src="comment-avatar.png" alt="Comment">
+                            </div>
                             <span class="count">15</span>
                         </button>
                         <button class="action-btn">
-                            <img src="share.png" alt="Share" class="icon">
-                            <span class="count">Share</span>
+                            <div class="action-avatar">
+                                <img src="share-avatar.png" alt="Share">
+                            </div>
+                            <span class="count">42</span>
                         </button>
                         <button class="action-btn">
-                            <img src="save.png" alt="Save" class="icon">
+                            <div class="action-avatar">
+                                <img src="save-avatar.png" alt="Save">
+                            </div>
                             <span class="count">Save</span>
                         </button>
                     </div>
@@ -1189,18 +1348,34 @@ console.log(randomColor()); // #a3f2c1</pre>
     </div>
 
     <script>
-        // ===== ПРИМЕНЕНИЕ СОХРАНЁННОЙ ТЕМЫ ПРИ ЗАГРУЗКЕ =====
+        // ===== УПРАВЛЕНИЕ МЕНЮ =====
+        function toggleMenu() {
+            const body = document.body;
+            if (window.innerWidth > 900) {
+                body.classList.toggle('menu-collapsed');
+            } else {
+                body.classList.toggle('menu-open');
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 900) {
+                document.body.classList.remove('menu-open');
+            } else {
+                document.body.classList.remove('menu-collapsed');
+            }
+        });
+
+        // ===== ПРИМЕНЕНИЕ ТЕМЫ =====
         function applyTheme(theme) {
             document.body.setAttribute('data-theme', theme);
         }
 
-        // Загружаем тему при старте
         window.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme') || 'black';
             applyTheme(savedTheme);
         });
 
-        // Слушаем изменения темы (если открыли settings.html в другой вкладке)
         window.addEventListener('storage', (e) => {
             if (e.key === 'theme' && e.newValue) {
                 applyTheme(e.newValue);
@@ -1213,9 +1388,17 @@ console.log(randomColor()); // #a3f2c1</pre>
             const countSpan = btn.querySelector('.count');
             let text = countSpan.textContent;
             
+            // Меняем аватарку при лайке (опционально)
+            const avatarImg = btn.querySelector('.action-avatar img');
+            
             if (btn.classList.contains('liked')) {
                 if (!text.includes('K')) {
                     countSpan.textContent = parseInt(text) + 1;
+                }
+                // Если есть заполненная иконка лайка, меняем на неё
+                if(avatarImg && avatarImg.src.includes('heart-avatar')) {
+                   // avatarImg.src = 'heart-filled-avatar.png'; 
+                   // Можно раскомментировать, если есть отдельный файл
                 }
             } else {
                 if (!text.includes('K')) {
