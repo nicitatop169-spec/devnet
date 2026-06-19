@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройки — DevNet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #242424;
+            --bg-tertiary: #2d2d2d;
+            --bg-card: #1f1f1f;
+            --accent-primary: #ffffff;
+            --accent-secondary: #e0e0e0;
+            --accent-dark: #666666;
+            --accent-glow: rgba(255, 255, 255, 0.3);
+            --text-primary: #e0e0e0;
+            --text-secondary: #888;
+            --border: #333;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header h1 {
+            color: var(--accent-primary);
+            font-size: 32px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header h1 img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: var(--accent-dark);
+            border-color: var(--accent-primary);
+        }
+
+        .back-btn img {
+            width: 16px;
+            height: 16px;
+        }
+
+        .settings-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            color: var(--accent-primary);
+            font-size: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-size: 16px;
+        }
+
+        .setting-description {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* Theme Selector */
+        .theme-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .theme-option {
+            aspect-ratio: 1;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.05);
+        }
+
+        .theme-option.active {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .theme-option.active::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .theme-black {
+            background: linear-gradient(135deg, #1a1a1a, #000);
+        }
+
+        .theme-white {
+            background: linear-gradient(135deg, #fff, #ccc);
+        }
+
+        .theme-green {
+            background: linear-gradient(135deg, #00ff41, #008f11);
+        }
+
+        .theme-blue {
+            background: linear-gradient(135deg, #0080ff, #0055aa);
+        }
+
+        .theme-name {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 11px;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Toggle Switch */
+        .toggle {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: var(--bg-tertiary);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--border);
+        }
+
+        .toggle.active {
+            background: var(--accent-primary);
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .toggle.active::after {
+            left: 26px;
+            background: #000;
+        }
+
+        /* Select */
+        .select-wrapper {
+            position: relative;
+        }
+
+        select {
+            appearance: none;
+            padding: 10px 35px 10px 15px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        select:hover {
+            border-color: var(--accent-primary);
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+        }
+
+        .select-wrapper::after {
+            content: '▼';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            pointer-events: none;
+            font-size: 10px;
+        }
+
+        /* Button */
+        .btn {
+            padding: 12px 24px;
+            background: var(--accent-primary);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #ff0055;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: #ff3377;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--accent-primary);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-avatar:hover::after {
+            content: '📷';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .profile-email {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            .theme-selector {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .setting-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .hidden-input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                <img src="settings.png" alt="Settings">
+                Настройки
+            </h1>
+            <a href="index.html" class="back-btn">
+                <img src="back.png" alt="Back">
+                Назад
+            </a>
+        </div>
+
+        <!-- Профиль -->
+        <div class="settings-section">
+            <div class="section-title">
+                <img src="profile.png" alt="Profile">
+                Профиль
+            </div>
+            <div class="profile-section">
+                <div class="profile-avatar" onclick="document.getElementById('avatarUpload').click()">
+                    <div class="placeholder" style="width: 100%; height: 100%; background: linear-gradient(135deg, var(--accent-primary), var(--accent-dark)); display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 32px;">U</div>
+                </div>
+                <input type="file" id="avatarUpload" class="hidden-input" accept="image/*" onchange="uploadAvatar(event)">
+                <div class="profile-info">
+                    <div class="profile-name">Пользователь</div>
+                    <div class="profile-email">user@devnet.com</div>
+                </div>
+                <button class="btn">Редактировать</button>
+            </div>
+        </div>
+
+        <!-- Тема -->
+        <div class="settings-section">
+            <div class="section-title">
+                <img src="theme.png" alt="Theme">
+                Внешний вид
+            </div>
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">Цветовая тема</div>
+                    <div class="setting-description">Выберите основную цветовую схему</div>
+                </div>
+            </div>
+            <div class="theme-selector">
+                <div class="theme-option theme-black active" onclick="selectTheme('black', this)">
+                    <div class="theme-name">Чёрная</div>
+                </div>
+                <div class="theme-option theme-white" onclick="selectTheme('white', this)">
+                    <div class="theme-name">Белая</div>
+                </div>
+                <div class="theme-option theme-green" onclick="selectTheme('green', this)">
+                    <div class="theme-name">Зелёная</div>
+                </div>
+                <div class="theme-option theme-blue" onclick="selectTheme('blue', this)">
+                    <div class="theme-name">Синяя</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Уведомления -->
+        <div class="settings-section">
+            <div class="section-title">
+                <img src="notifications.png" alt="Notifications">
+                Уведомления
+            </div>
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">Push-уведомления</div>
+                    <div class="setting-description">Получать уведомления о новых постах</div>
+                </div>
+                <div class="toggle active" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">Email-уведомления</div>
+                    <div class="setting-description">Получать письма о важных событиях</div>
+                </div>
+                <div class="toggle" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">Звук уведомлений</div>
+                    <div class="setting-description">Воспроизводить звук при получении уведомления</div>
+                </div>
+                <div class="toggle active" onclick="toggleSwitch(this)"></div>
+            </div>
+        </div>
+
+        <!-- Конфиденциальность -->
+        <div class="settings-section">
+            <div class="section-title">
+                <img src="privacy.png" alt="Privacy">
+                Конфиденциальность
+            </div>
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">Приватный профиль</div>
+                    <div class="setting-description">Только подписчики видят ваши посты</div>
+                </div>
+                <div class="toggle" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">Показывать онлайн-статус</div>
+                    <div class="setting-description">Другие видят, когда вы в сети</div>
+                </div>
+                <div class="toggle active" onclick="toggleSwitch(this)"></div>
+            </div>
+        </div>
+
+        <!-- Язык -->
+        <div class="settings-section">
+            <div class="section-title">
+                <img src="language.png" alt="Language">
+                Язык и регион
+            </div>
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">Язык интерфейса</div>
+                    <div class="setting-description">Выберите язык приложения</div>
+                </div>
+                <div class="select-wrapper">
+                    <select>
+                        <option>Русский</option>
+                        <option>English</option>
+                        <option>Deutsch</option>
+                        <option>Français</option>
+                    </select>
+                </div>
+            </div>
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">Часовой пояс</div>
+                    <div class="setting-description">Ваш текущий часовой пояс</div>
+                </div>
+                <div class="select-wrapper">
+                    <select>
+                        <option>UTC+3 (Москва)</option>
+                        <option>UTC+5 (Екатеринбург)</option>
+                        <option>UTC+7 (Красноярск)</option>
+                        <option>UTC+10 (Владивосток)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Аккаунт -->
+        <div class="settings-section">
+            <div class="section-title">
+                <img src="account.png" alt="Account">
+                Аккаунт
+            </div>
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">Сменить пароль</div>
+                    <div class="setting-description">Обновите пароль для безопасности</div>
+                </div>
+                <button class="btn">Изменить</button>
+            </div>
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">Двухфакторная аутентификация</div>
+                    <div class="setting-description">Дополнительная защита аккаунта</div>
+                </div>
+                <div class="toggle" onclick="toggleSwitch(this)"></div>
+            </div>
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label" style="color: #ff0055;">Удалить аккаунт</div>
+                    <div class="setting-description">Это действие нельзя отменить</div>
+                </div>
+                <button class="btn btn-danger">Удалить</button>
+            </div>
+        </div>
+
+        <!-- О приложении -->
+        <div class="settings-section">
+            <div class="section-title">
+                <img src="info.png" alt="Info">
+                О приложении
+            </div>
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">Версия</div>
+                    <div class="setting-description">Текущая версия приложения</div>
+                </div>
+                <div style="color: var(--text-secondary);">1.0.0</div>
+            </div>
+            <div class="setting-item">
+                <div>
+                    <div class="setting-label">Проверить обновления</div>
+                    <div class="setting-description">Убедитесь, что у вас последняя версия</div>
+                </div>
+                <button class="btn">Проверить</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function selectTheme(theme, element) {
+            // Убираем active у всех
+            document.querySelectorAll('.theme-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            // Добавляем active к выбранному
+            element.classList.add('active');
+            
+            // Сохраняем в localStorage
+            localStorage.setItem('theme', theme);
+            
+            // Применяем тему
+            document.body.setAttribute('data-theme', theme);
+            
+            // Показываем уведомление
+            showNotification('Тема изменена');
+        }
+
+        function toggleSwitch(element) {
+            element.classList.toggle('active');
+            const isActive = element.classList.contains('active');
+            showNotification(isActive ? 'Включено' : 'Выключено');
+        }
+
+        function uploadAvatar(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const avatar = document.querySelector('.profile-avatar');
+                    avatar.innerHTML = `<img src="${e.target.result}" alt="Avatar">`;
+                    showNotification('Аватар обновлён');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--accent-primary);
+                color: #000;
+                padding: 15px 25px;
+                border-radius: 8px;
+                font-weight: bold;
+                z-index: 10000;
+                animation: slideIn 0.3s;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.3s';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+
+        // Загружаем сохранённую тему
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'black';
+            document.body.setAttribute('data-theme', savedTheme);
+            
+            const themeOption = document.querySelector(`.theme-${savedTheme}`);
+            if (themeOption) {
+                document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
+                themeOption.classList.add('active');
+            }
+        });
+    </script>
+
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
+</body>
+</html>
